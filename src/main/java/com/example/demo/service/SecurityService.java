@@ -1,18 +1,27 @@
 package com.example.demo.service;
 
+import com.example.demo.mapper.SecurityMapper;
 import com.example.demo.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Security服务
+ */
 @Service
 public class SecurityService {
 
     @Autowired
-    UserInfoMapper user_mapper;
+    SecurityMapper securityMapper;
 
+    /**
+     * 获得能访问该url的角色权限
+     * @param url 要访问的url
+     * @return 能够访问该url的权限集合List
+     */
     public List<String> getRoleByUrl(String url) {
-        return user_mapper.getRoleByUrl(url);
+        return securityMapper.getRoleByUrl(url);
     }
 }

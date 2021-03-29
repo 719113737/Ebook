@@ -12,10 +12,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
+/**
+ * SpringSecurity配置文件
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true) //启用方法级别的权限认证
 public class SecurityCofigure extends WebSecurityConfigurerAdapter {
+
 
     @Autowired
     MyAuthenticationProvider myAuthenticationProvider;
@@ -29,6 +33,12 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
     //过滤器配置
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        /**
+         * 登录路由：/login
+         * 登录失败跳转路由：/login?error
+         * 登录成功路由：默认/login?logout，现在改为/login_success
+         * 拒绝访问路由:/error
+         */
         http
                 .authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {

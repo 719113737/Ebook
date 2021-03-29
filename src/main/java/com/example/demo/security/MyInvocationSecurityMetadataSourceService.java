@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * 自定义的Metadata，通过当前请求地址，获取该地址所需要的角色
+ */
 @Service
 public class MyInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
 

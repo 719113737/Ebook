@@ -8,12 +8,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * 用户信息相关服务
+ */
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     UserInfoMapper userInfo_mapper;
 
+    /**
+     *
+     * @param username 用户名
+     * @return 有则返回UserInfo对象，无则返回null
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //find data from database by username

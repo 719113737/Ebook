@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * 自定义的AccessDecisionManager,用来判断权限
+ */
 @Service
 public class MyAccessDecisionManager implements AccessDecisionManager {
     /**

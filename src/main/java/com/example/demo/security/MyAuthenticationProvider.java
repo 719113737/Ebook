@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
-
+/**
+ * 实现登录认证逻辑
+ */
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {
 

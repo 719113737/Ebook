@@ -5,6 +5,9 @@ import org.springframework.util.DigestUtils;
 
 import java.io.UnsupportedEncodingException;
 
+/**
+ * 实现加密
+ */
 public class PasswordEncoderImpl implements PasswordEncoder {
 
     @Override

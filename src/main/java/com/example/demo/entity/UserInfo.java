@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * this class is used for users' information
+ * 用于储存用户信息的实体
  */
 public class UserInfo implements UserDetails, Serializable {
 

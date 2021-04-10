@@ -20,6 +20,10 @@ public class BookServer {
     @Autowired
     CollectionMapper collectionMapper;
 
+    public List<Book>findAllBooks() {
+        return bookMapper.findAllBooks();
+    }
+
     /**
      * 通过title获得书信息
      * @param title
@@ -39,13 +43,22 @@ public class BookServer {
     }
 
     /**
+     * 返回文件路径
+     * @param title 书标题
+     * @return
+     */
+    public String getPathByTitle(String title) {
+        Book book = bookMapper.getBookByTitle(title);
+        return book.getFilePath();
+    }
+
+    /**
      * 添加收藏夹信息
      * @param username 用户名
      * @param title 书标题
      */
     public void setCollection(String username,String title){
-        Collection collection = new Collection(username,title);
-        collectionMapper.insertCollection(collection);
+        collectionMapper.insertCollection(new Collection(username,title));
     }
 
     /**
@@ -55,6 +68,15 @@ public class BookServer {
      */
     public List<CollectionInfo> getCollectionByUsername(String username) {
         return collectionMapper.getCollectionByUsername(username);
+    }
+
+    /**
+     * 删除一条用户收藏信息
+     * @param username 用户名
+     * @param title 书标题
+     */
+    public void deleteCollection(String username,String title) {
+        collectionMapper.deleteCollection(new Collection(username,title));
     }
 
 }

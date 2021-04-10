@@ -49,7 +49,7 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
                         return o;
                     }
                 })
-                    .antMatchers("/","/home").permitAll()
+                    .antMatchers("/","/home","/show").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

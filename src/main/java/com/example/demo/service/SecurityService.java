@@ -5,6 +5,7 @@ import com.example.demo.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +23,6 @@ public class SecurityService {
      * @return 能够访问该url的权限集合List
      */
     public List<String> getRoleByUrl(String url) {
-        return securityMapper.getRoleByUrl(url);
+        return new ArrayList<>();
     }
 }

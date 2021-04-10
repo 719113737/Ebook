@@ -11,6 +11,7 @@ import java.util.List;
  * 从数据库中寻找权限与路由相关信息
  */
 @Service
+@Mapper
 public interface SecurityMapper {
 
     /**

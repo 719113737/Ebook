@@ -15,17 +15,19 @@ public class UserInfo implements UserDetails, Serializable {
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
+    private String phone;
     private String role;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
 
-    public UserInfo(String username, String password, String role, boolean accountNonExpired, boolean accountNonLocked,
+    public UserInfo(String username, String password, String phone, String role, boolean accountNonExpired, boolean accountNonLocked,
                     boolean credentialsNonExpired, boolean enabled) {
         // TODO Auto-generated constructor stub
         this.username = username;
         this.password = password;
+        this.phone = phone;
         this.role = role;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
@@ -67,5 +69,13 @@ public class UserInfo implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

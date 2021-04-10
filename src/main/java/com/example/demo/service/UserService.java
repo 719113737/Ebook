@@ -28,8 +28,10 @@ public class UserService implements UserDetailsService {
         //find data from database by username
         String password = userInfo_mapper.findPasswordByUsername(username);
         String role = userInfo_mapper.findRoleByUsername(username);
+        String phone = userInfo_mapper.findPhoneByUsername(username);
 
-        if(password != null)return new UserInfo(username,password,role,true,true,true,true);
+        if(password != null)return new UserInfo(username,password, phone,
+                role,true,true,true,true);
 
         else return null;
     }

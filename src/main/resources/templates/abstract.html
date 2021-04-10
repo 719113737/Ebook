@@ -1,68 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" href="../../favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-  <title>Jumbotron Template for Bootstrap</title>
+    <title>Jumbotron Template for Bootstrap</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="/css/common.css">
-  <link href="/css/abstract.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link href="/css/abstract.css" rel="stylesheet">
 </head>
 
 <body>
-<div th:include="@{/common/header}"></div>
+<div th:include="@{/common/header}" th:with="user=0"></div>
 <div class="container">
-  <!-- Example row of columns -->
-  <div class="row featurette">
-    <div class="col-md-7 col-md-push-5">
-      <h2 class="book-heading">算法导论</h2>
-      <p class="meta">作者：张三</p>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-      <button type="button" class="btn btn-default">阅读</button>
-      <button type="button" class="btn btn-default">加入收藏</button>
+    <!-- Example row of columns -->
+    <div th:object="${book}" class="row featurette">
+        <div class="col-md-7 col-md-push-5">
+            <h3><a href="/abstract" th:href="@{/abstract(title=*{title})}" th:text="*{title}">算法导论</a></h3>
+            <p class="meta" th:text="'作者：' + *{author}">作者：张三</p>
+            <p class="lead" th:text="*{mAbstract}"></p>
+            <button type="button" class="btn btn-default">
+              <a href="/preview" th:href="@{/preview(title=*{title})}">阅读</a>
+            </button>
+          <button type="button" class="btn btn-default">
+            <a href="/preview" th:href="@{/collection(title=*{title})}">加入收藏</a>
+          </button>
+        </div>
+        <div class="col-md-5 col-md-pull-7">
+            <img class="center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image"
+                 src="/img/book1.jpg" height="360">
+        </div>
     </div>
-    <div class="col-md-5 col-md-pull-7">
-      <img class="featurette-image center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image" src="./book1.jpg" height="360">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">章节列表</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>第1章</li>
+                <li>第1章</li>
+                <li>第1章</li>
+                <li>第1章</li>
+                <li>第1章</li>
+                <li>第1章</li>
+                <li>第1章</li>
+                <li>第1章</li>
+            </ul>
+        </div>
     </div>
 
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">章节列表</h3>
-    </div>
-    <div class="panel-body">
-      <ul>
-        <li>第1章</li>
-        <li>第1章</li>
-        <li>第1章</li>
-        <li>第1章</li>
-        <li>第1章</li>
-        <li>第1章</li>
-        <li>第1章</li>
-        <li>第1章</li>
-      </ul>
-    </div>
-  </div>
 
+    <hr>
 
-  <hr>
-
-  <footer>
-    <p>© 2016 Company, Inc.</p>
-  </footer>
+    <footer>
+        <p>© 2016 Company, Inc.</p>
+    </footer>
 </div> <!-- /container -->
 
 
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>

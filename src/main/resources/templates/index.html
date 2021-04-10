@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,7 +36,7 @@
                     <h1>新书上架：算法导论</h1>
                     <p>
                         《算法导论》自第一版出版以来，已经成为世界范围内广泛使用的大学教材和专业人员的标准参考手册。本书全面论述了算法的内容，从一定深度上涵盖了算法的诸多方面，同时其讲授和分析方法又兼顾了各个层次读者的接受能力...</p>
-                    <p><a class="btn btn-lg btn-primary" href="/abstract" role="button">点击阅读</a></p>
+                    <p><a class="btn btn-lg btn-primary" href="/abstract?title=算法导论" role="button">点击阅读</a></p>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                     <h1>新书上架：魔法禁书目录-创约</h1>
                     <p>
                         《魔法禁书目录》系列的第三部，超越新约，开创新的时代！“创约”篇，开幕！！科学与魔法交错的世界。这里是进行超能力课程教学的学园都市。这座总人口里有八成为学生的城市，终于迎来了所有人都心跳不已的季节！圣诞平安夜。在城市欢快的喧闹声中，平凡的掉队少年上条当麻为了赶上这个节日，不得不忙于完成补习授课...</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">点击阅读</a></p>
+                    <p><a class="btn btn-lg btn-primary" href="/abstract?title=魔法禁书目录-创约" role="button">点击阅读</a></p>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
 <div class="container">
     <div th:each="book:${bookList}" class="row featurette">
         <div class="col-md-7 col-md-push-5">
-            <h3><a href="/abstract" th:text="${book.title}">算法导论</a></h3>
+            <h3><a href="/abstract" th:href="@{/abstract(title=${book.title})}" th:text="${book.title}">算法导论</a></h3>
             <p class="lead" th:text="${book.mAbstract}"></p>
         </div>
         <div class="col-md-5 col-md-pull-7">
@@ -92,7 +92,7 @@
 
     <div class="row featurette">
         <div class="col-md-7 col-md-push-5">
-            <h3><a href="/abstract">机器学习</a></h3>
+            <h3><a href="/abstract?title=机器学习">机器学习</a></h3>
             <p class="lead">机器学习是计算机科学与人工智能的重要分支领域. 本书作为该领域的入门教材，在内容上尽可能涵盖机器学习基础知识的各方面。 为了使尽可能多的读者通过本书对机器学习有所了解。</p>
         </div>
         <div class="col-md-5 col-md-pull-7">
@@ -103,7 +103,7 @@
 
     <div class="row featurette">
         <div class="col-md-7 col-md-push-5">
-            <h3><a href="/abstract">圆圈正义</a></h3>
+            <h3><a href="/abstract?title=圆圈正义">圆圈正义</a></h3>
             <p class="lead">
                 《圆圈正义》为法学教授罗翔独著的图书，由中国法制出版社于2019年8月出版。作者在本书中运用特有的坦诚、自省而尖锐笔调，探讨了法律、正义、道德的理念与现实、分析了社会热点案件、分享了自身求学经验和对人生的思考...</p>
         </div>

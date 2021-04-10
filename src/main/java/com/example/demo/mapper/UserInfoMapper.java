@@ -22,6 +22,13 @@ public interface UserInfoMapper {
     @Select("select password from user_data where username = #{username};")
     String findPasswordByUsername(@Param("username") String username);
 
+    /**
+     * 通过用户名寻找手机号
+     * @param username 用户名
+     * @return 返回手机号
+     */
+    @Select("select phone from user_data where username = #{username};")
+    String findPhoneByUsername(@Param("username") String username);
 
     /**
      * 通过用户名寻找角色权限

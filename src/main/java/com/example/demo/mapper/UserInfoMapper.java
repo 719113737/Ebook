@@ -1,5 +1,7 @@
 package com.example.demo.mapper;
 
+import com.example.demo.entity.UserInfo;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -28,4 +30,12 @@ public interface UserInfoMapper {
      */
     @Select("select role from user_data where username = #{username};")
     String findRoleByUsername(@Param("username") String username);
+
+
+    /**
+     * 向数据库中添加用户信息
+     * @return
+     */
+    @Insert("insert into user_data values(#{username},#{password},#{role});")
+    int insertUser(UserInfo userInfo);
 }

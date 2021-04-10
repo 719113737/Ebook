@@ -1,5 +1,10 @@
 package com.example.demo.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Book {
     public String id;
     public String title;
@@ -7,6 +12,5 @@ public class Book {
     public String imagePath;
     public String category;
     public String filePath;
-    public String publishDate;
     public String phases;
 }

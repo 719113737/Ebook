@@ -31,7 +31,6 @@ public class MainController {
             book.imagePath = "/img/book1.jpg";
             book.category = "IT/算法";
             book.filePath = "";
-            book.publishDate = "";
             book.phases = "";
             bookList.add(book);
         }

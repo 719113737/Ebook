@@ -85,8 +85,7 @@
             <p class="lead" th:text="${book.mAbstract}"></p>
         </div>
         <div class="col-md-5 col-md-pull-7">
-            <img class="center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image"
-                 src="/img/book1.jpg" height="200">
+            <img class="center-block" th:attr="src=${book.imagePath}" src="/img/book1.jpg" height="200">
         </div>
     </div>
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,11 +27,10 @@ public class MainController {
         for (int i=0;i<3;i++){
             Book book = new Book();
             book.title = "算法导论";
+            book.author = "张三";
             book.mAbstract = "《算法导论》自第一版出版以来，已经成为世界范围内广泛使用的大学教材和专业人员的标准参考手册。本书全面论述了算法的内容，从一定深度上涵盖了算法的诸多方面，同时其讲授和分析方法又兼顾了各个层次读者的接受能力...";
             book.imagePath = "/img/book1.jpg";
             book.category = "IT/算法";
-            book.filePath = "";
-            book.phases = "";
             bookList.add(book);
         }
         model.addAttribute("bookList", bookList);
@@ -43,16 +43,16 @@ public class MainController {
      */
     @RequestMapping("/abstract")
     public String mAbstract(@RequestParam("title") String title, Model model){
-        System.out.println(title);
         Book book = new Book();
         book.title = "算法导论";
         book.author = "张三";
         book.mAbstract = "《算法导论》自第一版出版以来，已经成为世界范围内广泛使用的大学教材和专业人员的标准参考手册。本书全面论述了算法的内容，从一定深度上涵盖了算法的诸多方面，同时其讲授和分析方法又兼顾了各个层次读者的接受能力...";
         book.imagePath = "/img/book1.jpg";
         book.category = "IT/算法";
-        book.filePath = "";
         book.phases = "";
         model.addAttribute("book", book);
+        boolean isInCollection = false;
+        model.addAttribute("isInCollection", isInCollection);
         return "abstract";
     }
 
@@ -68,32 +68,21 @@ public class MainController {
 
     /**
      * 预览书
-     * @param book 书名
+     * @param title 书名
      */
     @RequestMapping("/preview")
-    public String preview(@RequestParam("title") String book) {
+    public String preview(@RequestParam("title") String title) {
         return "preview";
     }
 
     /**
      * 添加收藏
-     * @param title
-     * @param model
-     * @return
      */
     @RequestMapping("/collection")
-    public String addCollection(@RequestParam("title") String title, Model model) {
-        System.out.println(title);
-        Book book = new Book();
-        book.title = "算法导论";
-        book.author = "张三";
-        book.mAbstract = "《算法导论》自第一版出版以来，已经成为世界范围内广泛使用的大学教材和专业人员的标准参考手册。本书全面论述了算法的内容，从一定深度上涵盖了算法的诸多方面，同时其讲授和分析方法又兼顾了各个层次读者的接受能力...";
-        book.imagePath = "/img/book1.jpg";
-        book.category = "IT/算法";
-        book.filePath = "";
-        book.phases = "";
-        model.addAttribute("book", book);
-        return "abstract";
+    public String addCollection(@RequestParam("title") String title, Model model, RedirectAttributes redirectAttributes) {
+        // TODO add book to collection
+        redirectAttributes.addAttribute("title", title);
+        return "redirect:/abstract";
     }
 
     /**
@@ -118,10 +107,25 @@ public class MainController {
      * @return 个人空间界面 personal.html
      */
     @RequestMapping("/personal")
-    public String personal_page() {
+    public String personal_page(Model model) {
+        List<Book> collectionList = new ArrayList<>();
+        for (int i=0;i<5;i++){
+            Book book = new Book();
+            book.title = "算法导论";
+            book.imagePath = "/img/book1.jpg";
+            collectionList.add(book);
+        }
+        model.addAttribute("collectionList", collectionList);
         return "personal";
     }
 
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public String changePassword(Model model, RedirectAttributes redirectAttributes) {
+        return "redirect:/personal";
+    }
 
-
+    @RequestMapping(value = "/changePhone", method = RequestMethod.POST)
+    public String changePhone(Model model, RedirectAttributes redirectAttributes) {
+        return "redirect:/personal";
+    }
 }

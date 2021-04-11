@@ -11,17 +11,8 @@ public interface BookMapper {
      * @param book 书
      * @return
      */
-    @Insert("insert into book values(#{id},#{title},#{mAbastract},#{category},#{filePath},#{phases},#{imagePath});")
+    @Insert("insert into book values(#{title},#{author},#{mAbstract},#{category},#{filePath},#{phases},#{imagePath});")
     int insertBook(Book book);
-
-    /**
-     * 通过书id寻找书信息
-     * @param id
-     * @return
-     */
-    @Select("select * from book where id = #{id};")
-    Book getBookById(@Param("id")String id);
-
 
     /**
      * 通过title寻找书的信息

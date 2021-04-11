@@ -29,14 +29,6 @@ public class BookServer {
         return bookMapper.getBookByTitle(title);
     }
 
-    /**
-     * 通过id获得书信息
-     * @param id
-     * @return
-     */
-    public Book getBookById(String id) {
-        return bookMapper.getBookById(id);
-    }
 
     /**
      * 添加收藏夹信息

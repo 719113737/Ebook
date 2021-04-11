@@ -79,7 +79,7 @@ public class MainController {
      * 添加收藏
      */
     @RequestMapping("/collection")
-    public String addCollection(@RequestParam("title") String title, Model model, RedirectAttributes redirectAttributes) {
+    public String addCollection(@RequestParam("title") String title, @RequestParam("user") String user, Model model, RedirectAttributes redirectAttributes) {
         // TODO add book to collection
         redirectAttributes.addAttribute("title", title);
         return "redirect:/abstract";
@@ -98,7 +98,8 @@ public class MainController {
      * @return 成功跳转界面 login_success.html
      */
     @RequestMapping(path = "/login_success",method = RequestMethod.GET)
-    public String login_page() {
+    public String login_page(Model model) {
+        model.addAttribute("user", "张三");
         return "login_success";
     }
 
@@ -107,7 +108,7 @@ public class MainController {
      * @return 个人空间界面 personal.html
      */
     @RequestMapping("/personal")
-    public String personal_page(Model model) {
+    public String personal_page(@RequestParam("user") String user, Model model) {
         List<Book> collectionList = new ArrayList<>();
         for (int i=0;i<5;i++){
             Book book = new Book();
@@ -120,12 +121,12 @@ public class MainController {
     }
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public String changePassword(Model model, RedirectAttributes redirectAttributes) {
+    public String changePassword(@RequestParam("user") String user,Model model, RedirectAttributes redirectAttributes) {
         return "redirect:/personal";
     }
 
     @RequestMapping(value = "/changePhone", method = RequestMethod.POST)
-    public String changePhone(Model model, RedirectAttributes redirectAttributes) {
+    public String changePhone(@RequestParam("user") String user,Model model, RedirectAttributes redirectAttributes) {
         return "redirect:/personal";
     }
 }

@@ -43,6 +43,6 @@ public interface UserInfoMapper {
      * 向数据库中添加用户信息
      * @return
      */
-    @Insert("insert into user_data values(#{username},#{password},#{role});")
+    @Insert("insert into user_data values(#{username},#{password},#{phone},#{role});")
     int insertUser(UserInfo userInfo);
 }

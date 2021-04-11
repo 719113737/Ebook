@@ -3,6 +3,8 @@ package com.example.demo.mapper;
 import com.example.demo.entity.Book;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface BookMapper {
 
@@ -23,5 +25,11 @@ public interface BookMapper {
     Book getBookByTitle(@Param("title")String title);
 
 
+    /**
+     * 返回所有的书
+     * @return
+     */
+    @Select("select * from book")
+    List<Book> findAllBooks();
 
 }

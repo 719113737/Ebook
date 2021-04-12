@@ -39,4 +39,19 @@ public class UserService implements UserDetailsService {
     public void changePassword(String username,String password) {
         
     }
+
+    /**
+     * 修改号码
+     * @param username 用户名
+     * @param newphone 新的电话号码
+     * @return
+     */
+    public boolean changePhone(String username,String newphone){
+        try{
+            userInfo_mapper.changePhone(username,newphone);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

@@ -51,4 +51,7 @@ public interface UserInfoMapper {
      */
     @Update("update user_data set password = #{password} where username = #{username};")
     int changePassword(@Param("useranme")String username,@Param("password")String password);
+
+    @Update("update user_data set phone = #{phone} where username = #{username};")
+    int changePhone(@Param("username")String username,@Param("phone")String phone);
 }

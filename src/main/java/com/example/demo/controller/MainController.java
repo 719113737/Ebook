@@ -4,6 +4,9 @@ import com.example.demo.dao.CollectionInfo;
 import com.example.demo.entity.Book;
 import com.example.demo.entity.Collection;
 import com.example.demo.service.BookServer;
+import com.example.demo.service.UserService;
+import jdk.nashorn.internal.ir.RuntimeNode;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
@@ -19,12 +22,16 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
 
     @Autowired
     BookServer bookServer;
+
+    @Autowired
+    UserService userService;
 
     /**
      * 进入主界面
@@ -138,13 +145,13 @@ public class MainController {
 
 
     /**
-     * 没有这种东西
      * @param model
      * @param redirectAttributes
      * @return
      */
     @RequestMapping(value = "/changePhone", method = RequestMethod.POST)
-    public String changePhone(Model model, RedirectAttributes redirectAttributes) {
+    public String changePhone(@RequestBody Map<String, String> map,Model model, RedirectAttributes redirectAttributes) {
+        userService.changePhone(map.get("user"),map.get("phone"));
         return "redirect:/personal";
     }
 }

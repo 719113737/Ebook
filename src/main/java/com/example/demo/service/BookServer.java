@@ -9,6 +9,7 @@ import com.example.demo.mapper.CollectionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -69,6 +70,16 @@ public class BookServer {
      */
     public void deleteCollection(String username,String title) {
         collectionMapper.deleteCollection(new Collection(username,title));
+    }
+
+    public boolean isCollect(String username,String title) {
+        List<CollectionInfo> collections = collectionMapper.getCollectionByUsername(username);
+        Iterator<CollectionInfo>collectionInfoIterator = collections.iterator();
+        while(collectionInfoIterator.hasNext()) {
+            CollectionInfo tmp = collectionInfoIterator.next();
+            if (tmp.getTitle().equals(title))return true;
+        }
+        return false;
     }
 
 }

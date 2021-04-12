@@ -35,4 +35,8 @@ public class UserService implements UserDetailsService {
 
         else return null;
     }
+
+    public void changePassword(String username,String password) {
+        
+    }
 }

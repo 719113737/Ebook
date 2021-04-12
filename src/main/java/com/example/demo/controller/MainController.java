@@ -5,6 +5,7 @@ import com.example.demo.entity.Book;
 import com.example.demo.entity.Collection;
 import com.example.demo.service.BookServer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,25 +55,23 @@ public class MainController {
     public String mAbstract(@RequestParam("title") String title, Model model){
         Book book = bookServer.getBookByTitle(title);
         model.addAttribute("book", book);
-        /*先默认都不在收藏*/
-        boolean isInCollection = false;
+        boolean isInCollection = bookServer.isCollect((String)model.getAttribute("user"),title);
         model.addAttribute("isInCollection", isInCollection);
         return "abstract";
     }
 
     /**
-     * -------------------暂未用--------------------
      * 搜索功能
      * @param title 书标题
      * @return 搜索结果
      */
     @RequestMapping("/title")
-    public String search(@RequestParam("title")String title) {
-        return "uncompleted";
+    public String search(@RequestParam("title")String title,Model model) {
+        model.addAttribute("book",bookServer.getBookByTitle(title));
+        return "index";
     }
 
     /**
-     * --------------------------暂时放着------------------------
      * 预览书
      * @param title 书名
      */
@@ -88,7 +87,7 @@ public class MainController {
      */
     @RequestMapping("/collection")
     public String addCollection(@RequestParam("title") String title, Model model, RedirectAttributes redirectAttributes) {
-        // TODO add book to collection
+        bookServer.setCollection((String) model.getAttribute("user"),title);
         redirectAttributes.addAttribute("title", title);
         return "redirect:/abstract";
     }
@@ -101,24 +100,25 @@ public class MainController {
     public String login(){
         return "login";
     }
+
     /**
      * 成功登录跳转界面
      * @return 成功跳转界面 login_success.html
      */
     @RequestMapping(path = "/login_success",method = RequestMethod.GET)
-    public String login_page() {
+    public String login_page(Model model,HttpServletRequest request) {
+        model.addAttribute("user", request.getSession().getAttribute("user"));
         return "login_success";
     }
 
     /**
-     * ----------------也需要用户名------------------
      * 进入个人中心
      * @return 个人空间界面 personal.html
      */
     @RequestMapping("/personal")
     public String personal_page(Model model) {
-        //todo 用户名
-        String username = "ljl";
+
+        String username = (String) model.getAttribute("user");
         List<CollectionInfo> collectionList = bookServer.getCollectionByUsername(username);
         model.addAttribute("collectionList", collectionList);
         return "personal";
@@ -132,6 +132,7 @@ public class MainController {
      */
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public String changePassword(Model model, RedirectAttributes redirectAttributes) {
+
         return "redirect:/personal";
     }
 

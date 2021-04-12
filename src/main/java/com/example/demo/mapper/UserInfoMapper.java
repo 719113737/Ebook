@@ -1,10 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.entity.UserInfo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -45,4 +42,13 @@ public interface UserInfoMapper {
      */
     @Insert("insert into user_data values(#{username},#{password},#{phone},#{role});")
     int insertUser(UserInfo userInfo);
+
+    /**
+     * 修改密码
+     * @param username 用户名
+     * @param password 密码
+     * @return
+     */
+    @Update("update user_data set password = #{password} where username = #{username};")
+    int changePassword(@Param("useranme")String username,@Param("password")String password);
 }

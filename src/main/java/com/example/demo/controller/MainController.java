@@ -39,17 +39,7 @@ public class MainController {
      */
     @RequestMapping("/")
     public String main_page(Model model) {
-        List<Book> bookList = new ArrayList<>();
-        for (int i=0;i<3;i++){
-            Book book = new Book();
-            book.title = "算法导论";
-            book.author = "张三";
-            book.mAbstract = "《算法导论》自第一版出版以来，已经成为世界范围内广泛使用的大学教材和专业人员的标准参考手册。本书全面论述了算法的内容，从一定深度上涵盖了算法的诸多方面，同时其讲授和分析方法又兼顾了各个层次读者的接受能力...";
-            book.imagePath = "/img/book1.jpg";
-            book.category = "IT/算法";
-            bookList.add(book);
-        }
-        bookList.addAll(bookServer.findAllBooks());//将所有书放进来
+        List<Book> bookList = bookServer.findAllBooks();    // 将所有书放进来
         model.addAttribute("bookList", bookList);
         return "index";
     }

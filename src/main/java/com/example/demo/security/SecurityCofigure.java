@@ -49,7 +49,7 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
                         return o;
                     }
                 })
-                    .antMatchers("/","/home","/show").permitAll()
+                    .antMatchers("/").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
@@ -58,7 +58,8 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .logoutSuccessUrl("/login_success");
-
+        // 允许加载iframe
+        http.headers().frameOptions().disable();
     }
 
 
@@ -68,12 +69,12 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(myAuthenticationProvider);
     }
 
-    /*
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("ljl").password("123456").roles("ADMIN");
-    }*/
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("ljl").password("123456").roles("ADMIN");
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    html, body{
+        height: 100%;
+    }
+    .out{
+        height: 100%;
+    }
+    .frame_style{
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<body>
+<div class="out">
+    <iframe class="frame_style" th:attr="src='/pdfjs/web/viewer.html?file=/preview_file?filename%3D' + ${path.filePath}">
+    </iframe>
+</div>
+</body>
+</html>

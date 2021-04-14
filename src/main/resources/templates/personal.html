@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+  <title>Dashboard Template for Bootstrap</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/common.css">
+  <link href="/css/personal.css" rel="stylesheet">
+</head>
+
+<body>
+  <div th:include="@{/common/header}" th:with="user=1"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar" id="myTabs">
+          <li role="presentation" class="active"><a href="#security" aria-controls="security" role="tab" data-toggle="tab">账户安全</a></li>
+          <li role="presentation"><a href="#favorite" aria-controls="favorite" role="tab" data-toggle="tab">我的收藏</a>
+          </li>
+        </ul>
+
+      </div>
+      <div class="tab-content">
+        <!-- 账户安全 -->
+        <div role="tabpanel" class="tab-pane active" id="security">
+          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">账户安全</h1>
+            <h2 class="sub-header">个人信息</h2>
+            <form class="form-horizontal" action="/changePhone" method="post">
+              <div class="form-group">
+                <label for="phone" class="col-sm-2 control-label">手机</label>
+                <div class="col-sm-10">
+                  <input type="tel" class="form-control" id="phone" placeholder="手机">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">修改</button>
+                </div>
+              </div>
+            </form>
+            <h2 class="sub-header">修改密码</h2>
+            <form class="form-horizontal" action="/changePassword" method="post">
+              <div class="form-group">
+                <label for="old-password" class="col-sm-2 control-label">旧密码</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="old-password" placeholder="旧密码">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="new-password" class="col-sm-2 control-label">新密码</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="new-password" placeholder="新密码">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="new-re-password" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="new-re-password" placeholder="确认密码">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">修改</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- 收藏夹 -->
+        <div role="tabpanel" class="tab-pane" id="favorite">
+          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">收藏夹</h1>
+            <div class="col-xs-12 col-sm-9">
+              <div class="row">
+                <div th:each="book:${collectionList}" class="col-xs-6 col-lg-4">
+                  <img class="center-block" src="/img/book1.jpg" th:attr="src=${book.imagePath}" alt="" height="200">
+                  <h2><a href="/abstract" th:href="@{/abstract(title=${book.title})}" th:text="${book.title}">算法导论</a></h2>
+                </div><!--/.col-xs-6.col-lg-4-->
+            </div><!--/.col-xs-12.col-sm-9-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+<script>
+  $('#myTabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
+
+</html>

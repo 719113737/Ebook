@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,11 +33,9 @@ public class MainController {
     @Autowired
     BookServer bookServer;
 
-    @Autowired
-    UserService userService;
-
     /**
      * 进入主界面
+     *
      * @return 主界面 index.html
      */
     @RequestMapping("/")
@@ -45,103 +46,81 @@ public class MainController {
     }
 
     /**
-     * 图书简介
+     * TODO 图书简介
+     *
      * @return 图书简介页
      */
     @RequestMapping("/abstract")
-    public String mAbstract(@RequestParam("title") String title, Model model){
+    public String mAbstract(@RequestParam("title") String title, Model model) {
         Book book = bookServer.getBookByTitle(title);
         model.addAttribute("book", book);
-        boolean isInCollection = bookServer.isCollect((String)model.getAttribute("user"),title);
+        String user = (String) model.getAttribute("user");
+        boolean isInCollection;
+        if (user == null) {
+            isInCollection = false;
+        } else {
+            isInCollection = bookServer.isCollect(user, title);
+        }
         model.addAttribute("isInCollection", isInCollection);
         return "abstract";
     }
 
     /**
-     * 搜索功能
+     * TODO 搜索功能
+     *
      * @param title 书标题
      * @return 搜索结果
      */
     @RequestMapping("/title")
-    public String search(@RequestParam("title")String title,Model model) {
-        model.addAttribute("book",bookServer.getBookByTitle(title));
+    public String search(@RequestParam("title") String title, Model model) {
+        model.addAttribute("book", bookServer.getBookByTitle(title));
         return "index";
     }
 
     /**
-     * 预览书
+     * 预览界面
+     *
      * @param title 书名
      */
     @RequestMapping("/preview")
-    public String preview(@RequestParam("title") String title,Model model) {
-        model.addAttribute("path",bookServer.getBookByTitle(title));
+    public String preview(@RequestParam("title") String title, Model model) {
+        model.addAttribute("path", bookServer.getBookByTitle(title));
         return "preview";
     }
 
     /**
      * ------------------------------也先放着-------------------------
-     * 添加收藏
+     * TODO 添加收藏
      */
     @RequestMapping("/collection")
     public String addCollection(@RequestParam("title") String title, Model model, RedirectAttributes redirectAttributes) {
-        bookServer.setCollection((String) model.getAttribute("user"),title);
+        bookServer.setCollection((String) model.getAttribute("user"), title);
         redirectAttributes.addAttribute("title", title);
         return "redirect:/abstract";
     }
 
     /**
-     * 登录
-     * @return 登录页面
+     * 读取pdf文件
+     *
+     * @param filename 文件名
+     * @param request 请求
+     * @param response 响应
      */
-    @RequestMapping("/login")
-    public String login(){
-        return "login";
-    }
-
-    /**
-     * 成功登录跳转界面
-     * @return 成功跳转界面 login_success.html
-     */
-    @RequestMapping(path = "/login_success",method = RequestMethod.GET)
-    public String login_page(Model model,HttpServletRequest request) {
-        model.addAttribute("user", request.getSession().getAttribute("user"));
-        return "login_success";
-    }
-
-    /**
-     * 进入个人中心
-     * @return 个人空间界面 personal.html
-     */
-    @RequestMapping("/personal")
-    public String personal_page(Model model) {
-
-        String username = (String) model.getAttribute("user");
-        List<CollectionInfo> collectionList = bookServer.getCollectionByUsername(username);
-        model.addAttribute("collectionList", collectionList);
-        return "personal";
-    }
-
-    /**
-     * 没有这种东西
-     * @param model
-     * @param redirectAttributes
-     * @return
-     */
-    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public String changePassword(Model model, RedirectAttributes redirectAttributes) {
-
-        return "redirect:/personal";
-    }
-
-
-    /**
-     * @param model
-     * @param redirectAttributes
-     * @return
-     */
-    @RequestMapping(value = "/changePhone", method = RequestMethod.POST)
-    public String changePhone(@RequestBody Map<String, String> map,Model model, RedirectAttributes redirectAttributes) {
-        userService.changePhone(map.get("user"),map.get("phone"));
-        return "redirect:/personal";
+    @RequestMapping(value = "/preview_file", method = RequestMethod.GET)
+    public void pdfStreamHandler(@RequestParam("filename") String filename, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(filename);
+        File file = new File("./src/main/resources/static" + filename);
+        if (file.exists()) {
+            byte[] data = null;
+            try {
+                FileInputStream input = new FileInputStream(file);
+                data = new byte[input.available()];
+                input.read(data);
+                response.getOutputStream().write(data);
+                input.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

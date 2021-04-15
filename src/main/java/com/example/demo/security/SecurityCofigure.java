@@ -39,10 +39,6 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
          * 登录成功路由：默认/login?logout，现在改为/login_success
          * 拒绝访问路由:/error
          */
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().permitAll()
-//                .and().logout().permitAll();
         http
                 .authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
@@ -57,16 +53,12 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                    .loginPage("/login").successForwardUrl("/login_success")
+                    .loginPage("/login").defaultSuccessUrl("/login_success.do")
                     .permitAll()
                     .and()
-                .logout()
-                    .logoutSuccessUrl("/login_success").and()
-                // 允许加载iframe
-                .headers().frameOptions().disable()
-//                .and()
-//                .csrf().disable()
-                ;
+                .logout();
+        // 允许加载iframe
+        http.headers().frameOptions().disable();
     }
 
 

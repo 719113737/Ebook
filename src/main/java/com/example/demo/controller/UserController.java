@@ -40,11 +40,18 @@ public class UserController {
      *
      * @return 成功跳转界面 login_success.html
      */
-    @RequestMapping(path = "/login_success", method = RequestMethod.GET)
+    @RequestMapping(path = "/login_success.do", method = RequestMethod.GET)
     public String login_page(Model model, HttpServletRequest request) {
         model.addAttribute("user", request.getSession().getAttribute("user"));
         return "login_success";
     }
+
+    /*
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public String post_login(Model model, HttpServletRequest request) {
+        model.addAttribute("user", request.getSession().getAttribute("user"));
+        return "login_success";
+    }*/
 
     /**
      * TODO 进入个人中心

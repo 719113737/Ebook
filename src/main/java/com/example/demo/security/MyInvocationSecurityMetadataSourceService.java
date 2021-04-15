@@ -28,9 +28,6 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         //object中包含用户请求request信息
         HttpServletRequest request = ((FilterInvocation) o).getHttpRequest();
         String url = request.getRequestURI();
-        System.out.println("-------------test-----------------");
-        System.out.println(url);
-        System.out.println("-------------test-----------------");
         List<String> roleNameList = securityService.getRoleByUrl(url);
         if(roleNameList!=null) {
             List<ConfigAttribute> attributes = new ArrayList<>();

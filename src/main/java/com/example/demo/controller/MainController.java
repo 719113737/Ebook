@@ -89,8 +89,11 @@ public class MainController {
     }
 
     /**
-     * ------------------------------也先放着-------------------------
-     * TODO 添加收藏
+     * 添加收藏
+     * @param title
+     * @param model
+     * @param redirectAttributes
+     * @return
      */
     @RequestMapping("/collection")
     public String addCollection(@RequestParam("title") String title, Model model, RedirectAttributes redirectAttributes) {
@@ -123,4 +126,16 @@ public class MainController {
             }
         }
     }
+
+    /**
+     * 登出界面
+     * @param model
+     * @return
+     */
+    @RequestMapping("/logout")
+    public String logout(Model model) {
+
+        return "/index";
+    }
+
 }

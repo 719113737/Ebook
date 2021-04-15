@@ -26,12 +26,13 @@
   </ul>
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="login">
-      <form class="form-signin" action="/login" method="post">
+      <form class="form-signin" th:action="@{/login}" method="post">
         <h2 class="form-signin-heading">登录</h2>
         <label for="login-username" class="sr-only">用户名</label>
         <input name="username" type="text" id="login-username" class="form-control" placeholder="用户名" required autofocus>
         <label for="login-password" class="sr-only">Password</label>
         <input name="password" type="password" id="login-password" class="form-control" placeholder="密码" required>
+
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> 记住登录信息
@@ -41,7 +42,7 @@
       </form>
     </div>
     <div role="tabpanel" class="tab-pane" id="register">
-      <form class="form-signin" action="/register" method="post">
+      <form class="form-signin" th:action="@{/register}" method="post">
         <h2 class="form-signin-heading">注册</h2>
         <label for="reg-username" class="sr-only">用户名</label>
         <input type="text" id="reg-username" class="form-control" placeholder="用户名" required autofocus>

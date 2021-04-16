@@ -1,18 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.CollectionInfo;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.service.BookServer;
 import com.example.demo.service.UserService;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -46,36 +43,31 @@ public class UserController {
         return "login_success";
     }
 
-    /*
-    @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public String post_login(Model model, HttpServletRequest request) {
-        model.addAttribute("user", request.getSession().getAttribute("user"));
-        return "login_success";
-    }*/
-
     /**
-     * TODO 进入个人中心
+     * 进入个人中心
      *
      * @return 个人空间界面 personal.html
      */
     @RequestMapping("/personal")
-    public String personal_page(Model model) {
-
-        String username = (String) model.getAttribute("user");
+    public String personal_page(Model model, HttpServletRequest request) {
+        String username = (String) request.getSession().getAttribute("user");
         List<CollectionInfo> collectionList = bookServer.getCollectionByUsername(username);
         model.addAttribute("collectionList", collectionList);
+        UserInfo userInfo = (UserInfo) userService.loadUserByUsername(username);
+        model.addAttribute("phone", userInfo.getPhone());
         return "personal";
     }
 
     /**
-     * TODO 修改手机号
-     * @param model
-     * @param redirectAttributes
-     * @return
+     * 修改手机号
+     *
+     * @param map 手机号
+     * @return 重定向回主界面
      */
     @RequestMapping(value = "/changePhone", method = RequestMethod.POST)
-    public String changePhone(@RequestBody Map<String, String> map, Model model, RedirectAttributes redirectAttributes) {
-        userService.changePhone(map.get("user"), map.get("phone"));
+    public String changePhone(@RequestParam Map<String, String> map, HttpServletRequest request) {
+        String username = (String) request.getSession().getAttribute("user");
+        userService.changePhone(username, map.get("phone"));
         return "redirect:/personal";
     }
 }

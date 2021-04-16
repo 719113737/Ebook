@@ -21,12 +21,13 @@ public class BookServer {
     @Autowired
     CollectionMapper collectionMapper;
 
-    public List<Book>findAllBooks() {
+    public List<Book> findAllBooks() {
         return bookMapper.findAllBooks();
     }
 
     /**
      * 通过title获得书信息
+     *
      * @param title
      * @return
      */
@@ -37,6 +38,7 @@ public class BookServer {
 
     /**
      * 返回文件路径
+     *
      * @param title 书标题
      * @return
      */
@@ -47,15 +49,17 @@ public class BookServer {
 
     /**
      * 添加收藏夹信息
+     *
      * @param username 用户名
-     * @param title 书标题
+     * @param title    书标题
      */
-    public void setCollection(String username,String title){
-        collectionMapper.insertCollection(new Collection(username,title));
+    public void setCollection(String username, String title) {
+        collectionMapper.insertCollection(new Collection(username, title));
     }
 
     /**
      * 通过用户名查询用户收藏夹
+     *
      * @param username
      * @return
      */
@@ -65,19 +69,20 @@ public class BookServer {
 
     /**
      * 删除一条用户收藏信息
+     *
      * @param username 用户名
-     * @param title 书标题
+     * @param title    书标题
      */
-    public void deleteCollection(String username,String title) {
-        collectionMapper.deleteCollection(new Collection(username,title));
+    public void deleteCollection(String username, String title) {
+        collectionMapper.deleteCollection(new Collection(username, title));
     }
 
-    public boolean isCollect(String username,String title) {
+    public boolean isCollect(String username, String title) {
         List<CollectionInfo> collections = collectionMapper.getCollectionByUsername(username);
-        Iterator<CollectionInfo>collectionInfoIterator = collections.iterator();
-        while(collectionInfoIterator.hasNext()) {
+        Iterator<CollectionInfo> collectionInfoIterator = collections.iterator();
+        while (collectionInfoIterator.hasNext()) {
             CollectionInfo tmp = collectionInfoIterator.next();
-            if (tmp.getTitle().equals(title))return true;
+            if (tmp.getTitle().equals(title)) return true;
         }
         return false;
     }

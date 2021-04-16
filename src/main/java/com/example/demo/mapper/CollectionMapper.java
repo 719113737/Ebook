@@ -23,8 +23,8 @@ public interface CollectionMapper {
      * @param username 用户名
      * @return
      */
-    @Select("select collecton.username,collection.title,imagePath from collection" +
-            "left join book on book.title = collection.title" +
+    @Select("select collection.username,collection.title,imagePath from collection " +
+            "left join book on book.title = collection.title " +
             "where collection.username = #{username};")
     List<CollectionInfo> getCollectionByUsername(@Param("username")String username);
 

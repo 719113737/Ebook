@@ -36,10 +36,6 @@ public class UserService implements UserDetailsService {
         else return null;
     }
 
-    public void changePassword(String username,String password) {
-        
-    }
-
     /**
      * 修改号码
      * @param username 用户名

@@ -14,42 +14,23 @@
             <a class="navbar-brand" href="/">网上书城</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li id="user-panel" style="display:none" class="dropdown">
+            <li th:if="${session.user} != null" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                    aria-expanded="false">
                     <span class="glyphicon glyphicon-user"></span>
-                    <span id="user"></span>
+                    <span th:text="${session.user}"></span>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a id="personal" href="/personal">个人中心</a></li>
+                    <li><a id="personal" th:href="@{/personal?user= + ${session.user}}">个人中心</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="/logout">退出登录</a></li>
                 </ul>
             </li>
-            <li id="login-bt" style="display:none"><a class="btn btn-default" href="/login" role="button">登录</a></li>
+            <li th:if="${session.user} == null"><a class="btn btn-default" href="/login" role="button">登录</a></li>
         </ul>
-<!--        <div id="navbar" class="navbar-collapse collapse">-->
-<!--            <span class="navbar-right">-->
-<!--                <span th:if="${user eq 1}">-->
-<!--                    <ul>-->
-<!--                    </ul>-->
-<!--                </span>-->
-<!--                -->
-<!--            </span>-->
-<!--        </div>&lt;!&ndash;/.navbar-collapse &ndash;&gt;-->
     </div>
 </nav>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-let user = localStorage.getItem('user')
-if(user==null){
-    $('#login-bt').show()
-}else{
-    $('#user-panel').show()
-    $('#user').text(user)
-    $('#personal').attr('href', '/personal?user=' + user)
-}
-</script>
 </body>
 </html>

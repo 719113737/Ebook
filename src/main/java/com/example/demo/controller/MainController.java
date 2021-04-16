@@ -133,9 +133,11 @@ public class MainController {
      * @return
      */
     @RequestMapping("/logout")
-    public String logout(Model model) {
-
-        return "/index";
+    public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("select");
+        request.getSession().removeAttribute("user");
+        System.out.println(request.getSession().getAttribute("user"));
+        return "redirect:/";
     }
 
 }

@@ -51,16 +51,16 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
                     }
                 })
                     .antMatchers("/").permitAll()
-                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login").defaultSuccessUrl("/login_success.do")
                     .permitAll()
                     .and()
                 .logout()
-                     .logoutUrl("/login?logout")
+                     .logoutUrl("/logout")
                      .invalidateHttpSession(true)
                      .clearAuthentication(true)
+                     .deleteCookies("JSESSIONID")
                 .permitAll();
         // 允许加载iframe
         http.headers().frameOptions().disable();

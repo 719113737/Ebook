@@ -51,10 +51,10 @@ public class MainController {
      * @return 图书简介页
      */
     @RequestMapping("/abstract")
-    public String mAbstract(@RequestParam("title") String title, Model model) {
+    public String mAbstract(@RequestParam("title") String title, Model model, HttpServletRequest request) {
         Book book = bookServer.getBookByTitle(title);
         model.addAttribute("book", book);
-        String user = (String) model.getAttribute("user");
+        String user = (String) request.getSession().getAttribute("user");
         boolean isInCollection;
         if (user == null) {
             isInCollection = false;
@@ -96,9 +96,15 @@ public class MainController {
      * @return
      */
     @RequestMapping("/collection")
-    public String addCollection(@RequestParam("title") String title, Model model, RedirectAttributes redirectAttributes) {
-        bookServer.setCollection((String) model.getAttribute("user"), title);
-        redirectAttributes.addAttribute("title", title);
+    public String addCollection(@RequestParam("title") String title, @RequestParam("op") String operation, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        String username = (String) request.getSession().getAttribute("user");
+        if ("add".equals(operation)){
+            bookServer.setCollection(username, title);
+            redirectAttributes.addAttribute("title", title);
+        }else if("del".equals(operation)){
+            bookServer.deleteCollection(username, title);
+            redirectAttributes.addAttribute("title", title);
+        }
         return "redirect:/abstract";
     }
 

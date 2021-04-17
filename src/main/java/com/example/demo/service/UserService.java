@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,5 +50,20 @@ public class UserService implements UserDetailsService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * 注册
+     */
+    public boolean registerUser(String username, String password, String phone){
+        try {
+            UserInfo userInfo = new UserInfo(username,password, phone,"USER",
+                    true,true,true,true);
+            userInfo_mapper.insertUser(userInfo);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
     }
 }

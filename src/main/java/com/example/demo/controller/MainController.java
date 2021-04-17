@@ -140,9 +140,7 @@ public class MainController {
      */
     @RequestMapping("/logout")
     public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("select");
         request.getSession().removeAttribute("user");
-        System.out.println(request.getSession().getAttribute("user"));
         return "redirect:/";
     }
 

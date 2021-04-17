@@ -42,16 +42,17 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
          */
         http
                 .authorizeRequests()
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    @Override
-                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
-                        o.setSecurityMetadataSource(myInvocationSecurityMetadataSourceService);
-                        o.setAccessDecisionManager(myAccessDecisionManager);
-                        return o;
-                    }
-                })
-                    .antMatchers("/").permitAll()
-                    .and()
+//                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
+//                    @Override
+//                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
+//                        o.setSecurityMetadataSource(myInvocationSecurityMetadataSourceService);
+//                        o.setAccessDecisionManager(myAccessDecisionManager);
+//                        return o;
+//                    };
+//                })
+                .antMatchers("/", "/img/**", "/css/**", "/js/**", "/pdf/**", "/pdfjs/**", "/abstract", "/preview", "/register", "/preview_file").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
                     .loginPage("/login").defaultSuccessUrl("/login_success.do")
                     .permitAll()
@@ -60,8 +61,7 @@ public class SecurityCofigure extends WebSecurityConfigurerAdapter {
                      .logoutUrl("/logout")
                      .invalidateHttpSession(true)
                      .clearAuthentication(true)
-                     .deleteCookies("JSESSIONID")
-                .permitAll();
+                     .deleteCookies("JSESSIONID");
         // 允许加载iframe
         http.headers().frameOptions().disable();
     }

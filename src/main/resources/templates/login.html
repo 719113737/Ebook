@@ -33,11 +33,6 @@
         <label for="login-password" class="sr-only">Password</label>
         <input name="password" type="password" id="login-password" class="form-control" placeholder="密码" required>
 
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> 记住登录信息
-          </label>
-        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
     </div>
@@ -45,13 +40,13 @@
       <form class="form-signin" th:action="@{/register}" method="post">
         <h2 class="form-signin-heading">注册</h2>
         <label for="reg-username" class="sr-only">用户名</label>
-        <input type="text" id="reg-username" class="form-control" placeholder="用户名" required autofocus>
+        <input name="username" type="text" id="reg-username" class="form-control" placeholder="用户名" required autofocus>
         <label for="reg-password" class="sr-only">密码</label>
-        <input type="password" id="reg-password" class="form-control" placeholder="密码" required>
+        <input name="password" type="password" id="reg-password" class="form-control" placeholder="密码" required>
         <label for="reg-re-password" class="sr-only">确认密码</label>
         <input type="password" id="reg-re-password" class="form-control" placeholder="确认密码" required>
         <label for="reg-phone" class="sr-only">手机</label>
-        <input type="tel" id="reg-phone" class="form-control" placeholder="手机" required>
+        <input name="phone" type="tel" id="reg-phone" class="form-control" placeholder="手机" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
       </form>
     </div>

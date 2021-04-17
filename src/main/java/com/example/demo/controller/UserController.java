@@ -33,6 +33,19 @@ public class UserController {
     }
 
     /**
+     * 注册
+     *
+     * @return 注册成功重定向
+     */
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String register(@RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           @RequestParam("phone") String phone) {
+        userService.registerUser(username, password, phone);
+        return "redirect:/login";
+    }
+
+    /**
      * 成功登录跳转界面
      *
      * @return 成功跳转界面 login_success.html

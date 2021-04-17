@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dao.CollectionInfo;
 import com.example.demo.entity.UserInfo;
-import com.example.demo.service.BookServer;
+import com.example.demo.service.BookService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
-    BookServer bookServer;
+    BookService bookService;
 
     /**
      * 登录
@@ -64,7 +64,7 @@ public class UserController {
     @RequestMapping("/personal")
     public String personal_page(Model model, HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("user");
-        List<CollectionInfo> collectionList = bookServer.getCollectionByUsername(username);
+        List<CollectionInfo> collectionList = bookService.getCollectionByUsername(username);
         model.addAttribute("collectionList", collectionList);
         UserInfo userInfo = (UserInfo) userService.loadUserByUsername(username);
         model.addAttribute("phone", userInfo.getPhone());

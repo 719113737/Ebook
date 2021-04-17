@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class BookServer {
+public class BookService {
 
     @Autowired
     BookMapper bookMapper;

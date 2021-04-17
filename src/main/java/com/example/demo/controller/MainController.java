@@ -1,17 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.CollectionInfo;
 import com.example.demo.entity.Book;
-import com.example.demo.entity.Collection;
-import com.example.demo.service.BookServer;
-import com.example.demo.service.UserService;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import org.apache.catalina.User;
+import com.example.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,19 +12,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MainController {
 
     @Autowired
-    BookServer bookServer;
+    BookService bookService;
 
     /**
      * 进入主界面
@@ -40,7 +29,7 @@ public class MainController {
      */
     @RequestMapping("/")
     public String main_page(Model model) {
-        List<Book> bookList = bookServer.findAllBooks();    // 将所有书放进来
+        List<Book> bookList = bookService.findAllBooks();    // 将所有书放进来
         model.addAttribute("bookList", bookList);
         return "index";
     }
@@ -52,14 +41,14 @@ public class MainController {
      */
     @RequestMapping("/abstract")
     public String mAbstract(@RequestParam("title") String title, Model model, HttpServletRequest request) {
-        Book book = bookServer.getBookByTitle(title);
+        Book book = bookService.getBookByTitle(title);
         model.addAttribute("book", book);
         String user = (String) request.getSession().getAttribute("user");
         boolean isInCollection;
         if (user == null) {
             isInCollection = false;
         } else {
-            isInCollection = bookServer.isCollect(user, title);
+            isInCollection = bookService.isCollect(user, title);
         }
         model.addAttribute("isInCollection", isInCollection);
         return "abstract";
@@ -73,7 +62,7 @@ public class MainController {
      */
     @RequestMapping("/title")
     public String search(@RequestParam("title") String title, Model model) {
-        model.addAttribute("book", bookServer.getBookByTitle(title));
+        model.addAttribute("book", bookService.getBookByTitle(title));
         return "index";
     }
 
@@ -84,7 +73,7 @@ public class MainController {
      */
     @RequestMapping("/preview")
     public String preview(@RequestParam("title") String title, Model model) {
-        model.addAttribute("path", bookServer.getBookByTitle(title));
+        model.addAttribute("path", bookService.getBookByTitle(title));
         return "preview";
     }
 
@@ -99,10 +88,10 @@ public class MainController {
     public String addCollection(@RequestParam("title") String title, @RequestParam("op") String operation, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("user");
         if ("add".equals(operation)){
-            bookServer.setCollection(username, title);
+            bookService.setCollection(username, title);
             redirectAttributes.addAttribute("title", title);
         }else if("del".equals(operation)){
-            bookServer.deleteCollection(username, title);
+            bookService.deleteCollection(username, title);
             redirectAttributes.addAttribute("title", title);
         }
         return "redirect:/abstract";
@@ -117,7 +106,6 @@ public class MainController {
      */
     @RequestMapping(value = "/preview_file", method = RequestMethod.GET)
     public void pdfStreamHandler(@RequestParam("filename") String filename, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(filename);
         File file = new File("./src/main/resources/static" + filename);
         if (file.exists()) {
             byte[] data = null;

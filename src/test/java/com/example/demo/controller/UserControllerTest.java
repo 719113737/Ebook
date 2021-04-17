@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Book;
+import com.example.demo.entity.UserInfo;
 import com.example.demo.service.BookService;
+import com.example.demo.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,11 +23,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MainControllerTest {
-
+public class UserControllerTest {
     private MockMvc mvc;
+
     @Autowired
     private WebApplicationContext ctx;
+
+    @MockBean
+    private UserService userService;
 
     @MockBean
     private BookService bookService;
@@ -39,42 +43,55 @@ public class MainControllerTest {
     }
 
     public void setUp() {
-        Mockito.when(bookService.findAllBooks())
+        Mockito.when(bookService.getCollectionByUsername("admin"))
                 .thenReturn(new ArrayList<>());
-        Mockito.when(bookService.getBookByTitle("算法导论"))
-                .thenReturn(new Book("算法导论", "abc", "/img/algorithm.jpg", "sdf", "/pdf/algorithm.pdf", "asd", "qwe"));
+        Mockito.when(userService.registerUser("aaa", "bbb", "123"))
+                .thenReturn(true);
+        Mockito.when(userService.loadUserByUsername("admin")).thenReturn(
+                new UserInfo("admin", "123", "145", "admin",
+                        true, true, true, true));
     }
 
     @Test
-    public void main_page() throws Exception {
+    public void login() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .get("/"))
+                .get("/login"))
                 .andExpect(status().isOk()) // 期待返回状态吗码200
                 .andDo(print()); // 打印返回的 http response 信息
     }
 
     @Test
-    public void mAbstract() throws Exception {
+    public void register() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .get("/abstract").queryParam("title", "算法导论"))
+                .post("/register").param("username", "aaa")
+                .param("password", "bbb")
+                .param("phone", "123"))
+                .andExpect(status().is3xxRedirection()) // 期待返回状态吗码200
+                .andDo(print()); // 打印返回的 http response 信息
+    }
+
+    @Test
+    public void login_page() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                .get("/login_success.do").sessionAttr("user", "admin"))
                 .andExpect(status().isOk()) // 期待返回状态吗码200
                 .andDo(print()); // 打印返回的 http response 信息
     }
 
     @Test
-    public void preview() throws Exception {
+    public void personal_page() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .get("/preview").queryParam("title", "算法导论"))
+                .get("/personal").sessionAttr("user", "admin"))
                 .andExpect(status().isOk()) // 期待返回状态吗码200
                 .andDo(print()); // 打印返回的 http response 信息
     }
 
     @Test
-    public void addCollection() throws Exception {
+    public void changePhone() throws Exception {
         mvc.perform(MockMvcRequestBuilders
-                .get("/collection").queryParam("title", "算法导论")
-                .queryParam("op", "add").sessionAttr("user", "admin"))
-                .andExpect(status().is3xxRedirection()) // 期待返回状态吗码302
+                .post("/changePhone").param("phone", "789")
+        .sessionAttr("user", "admin"))
+                .andExpect(status().is3xxRedirection()) // 期待返回状态吗码200
                 .andDo(print()); // 打印返回的 http response 信息
     }
 }

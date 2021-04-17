@@ -6,11 +6,21 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Book {
-    public String title;
-    public String mAbstract;
-    public String imagePath;
-    public String category;
-    public String filePath;
-    public String phases;
-    public String author;
+    private String title;
+    private String mAbstract;
+    private String imagePath;
+    private String category;
+    private String filePath;
+    private String phases;
+    private String author;
+
+    public Book(String title, String mAbstract, String imagePath, String category, String filePath, String phases, String author) {
+        this.title = title;
+        this.mAbstract = mAbstract;
+        this.imagePath = imagePath;
+        this.category = category;
+        this.filePath = filePath;
+        this.phases = phases;
+        this.author = author;
+    }
 }
